@@ -29,3 +29,13 @@ MonitorHandler.java
 Definisce l’implementazione dell’oggetto responsabile del monitoraggio, il cui comportamento è influenzato dal settaggio, da parte dell’utente, delle costanti spiegate nell’introduzione di questa piccola documentazione. Tale classe, istanziata una sola volta dalla classe Firewall, monitora il traffico prodotto da ogni host e invia un segnale ogni volta che un nuovo host supera i limiti. Questo porterà la classe Firewall a creare un thread dedicato per la gestione di tale problema.
 
 La documentazione su tutte le classi e le API di ONOS è reperibile all’indirizzo http://api.onosproject.org/1.2.1/org/onosproject e relative URL derivate.
+
+1) Per il corretto funzionamento del firewall, è necessario spostare la cartella “telcolab-firewall” nella directory “ONOS_ROOT/apps”;
+2) I settaggi del firewall sono impostabili modificando, come da istruzioni contenute nel file “readme.txt” nella seguente directory, le costanti statiche intere del sorgente java “MonitorHandler.java”, reperibile nella directory “telcolab-firewall\telcolab-firewall\src\main\java\org\telcolab\firewall”;
+3) Compilare il progetto usando Apache Maven, aprire quindi un terminale nella directory del progetto (ONOS_ROOT/apps/telcolab-firewall) ed eseguire il comando mvn clean install, verificando il BUILD SUCCESS;
+4) Avviare ONOS tramite Apache Karaf e installare l’applicazione custom da terminale, sempre nella directory del punto precedente, eseguendo il comando onos-app <ip-onos> install target/telcolab-firewall-1.0.oar
+5) Per la simulazione della rete usare Mininet, aprire un nuovo terminale ed eseguire il comando “sudo mn - -topo tree,2,5 --mac --switch ovsk --controller remote”;
+6) Attivare l’applicazione custom eseguendo, dalla CLI di ONOS, il comando app activate org.telcolab.firewall
+7) Effettuare un pingall, dalla CLI di Mininet, in questa maniera ONOS prenderà coscienza della topologia della rete, così come il Firewall
+8) Il Firewall è ora in esecuzione: generando traffico tramite Mininet, è possibile vedere le sue reazioni.
+9) Il log dell’applicazione è visualizzabile eseguendo, dalla CLI di ONOS, il comando log:tail org.telcolab.firewall
